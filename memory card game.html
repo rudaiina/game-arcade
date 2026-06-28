@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Card Game - Arcade</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(195, 169, 247, 0.3);
+      z-index: 10;
+    }
+    .site-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+    .home-link {
+      font-size: 30px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border-radius: 50%;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px #c6a1f7;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .home-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+    .container {
+      margin-top: 90px;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 28px 24px 24px;
+      border-radius: 30px;
+      box-shadow: 0 8px 30px rgba(150, 150, 200, 0.2);
+      text-align: center;
+      border: 4px solid #e6ccff;
+      width: min(92vw, 620px);
+    }
+    h1 {
+      color: #b38bff;
+      margin-bottom: 10px;
+      font-size: 2.1rem;
+      letter-spacing: 1px;
+    }
+    .status {
+      font-size: 1.1rem;
+      color: #5555aa;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      font-size: 1rem;
+      color: #6f4db8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .card {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #ffd6e8, #c9d8ff);
+      border: 2px solid #d4a5ff;
+      border-radius: 16px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      color: #4a2a5b;
+      box-shadow: 0 4px 10px rgba(120, 100, 180, 0.15);
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card.flipped {
+      background: #fff;
+      border-color: #b38bff;
+    }
+    .card.matched {
+      background: #d9f7d0;
+      border-color: #7acb74;
+      cursor: default;
+    }
+    .reset-btn {
+      padding: 10px 24px;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #ffd1dc, #c5d8ff);
+      color: #444;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .reset-btn:hover {
+      background: linear-gradient(90deg, #c5d8ff, #ffd1dc);
+      transform: scale(1.05);
+    }
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(4, minmax(56px, 1fr));
+        gap: 8px;
+      }
+      .card {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="site-title">🎮 Arcade</div>
+    <a href="home.html" class="home-link">🏠</a>
+  </div>
+
+  <div class="container">
+    <h1>Memory Card Game</h1>
+    <div class="status" id="status">Match all the cards to win!</div>
+    <div class="stats">
+      <span>Moves: <strong id="moves">0</strong></span>
+      <span>Matches: <strong id="matches">0</strong></span>
+    </div>
+    <div class="grid" id="gameBoard"></div>
+    <button class="reset-btn" onclick="startGame()">New Game</button>
+  </div>
+
+  <script>
+    const emojis = ['🍎', '🍌', '🍒', '🍇', '🍍', '🥝', '🍊', '🍓'];
+    const cards = [...emojis, ...emojis];
+    let flippedCards = [];
+    let matchedCards = [];
+    let moves = 0;
+    let matches = 0;
+    let lockBoard = false;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function startGame() {
+      flippedCards = [];
+      matchedCards = [];
+      moves = 0;
+      matches = 0;
+      lockBoard = false;
+      document.getElementById('moves').textContent = moves;
+      document.getElementById('matches').textContent = matches;
+      document.getElementById('status').textContent = 'Match all the cards to win!';
+      const board = document.getElementById('gameBoard');
+      board.innerHTML = '';
+
+      shuffle(cards).forEach((emoji, index) => {
+        const card = document.createElement('button');
+        card.className = 'card';
+        card.dataset.emoji = emoji;
+        card.dataset.index = index;
+        card.innerHTML = '?';
+        card.onclick = () => flipCard(card);
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      card.classList.add('flipped');
+      card.textContent = card.dataset.emoji;
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        moves++;
+        document.getElementById('moves').textContent = moves;
+        lockBoard = true;
+
+        const [first, second] = flippedCards;
+        if (first.dataset.emoji === second.dataset.emoji) {
+          first.classList.add('matched');
+          second.classList.add('matched');
+          matchedCards.push(first, second);
+          matches++;
+          document.getElementById('matches').textContent = matches;
+          document.getElementById('status').textContent = 'Nice! You found a pair!';
+          flippedCards = [];
+          lockBoard = false;
+
+          if (matches === emojis.length) {
+            document.getElementById('status').textContent = '🎉 You won the Memory Card Game!';
+          }
+        } else {
+          setTimeout(() => {
+            first.classList.remove('flipped');
+            second.classList.remove('flipped');
+            first.textContent = '?';
+            second.textContent = '?';
+            flippedCards = [];
+            lockBoard = false;
+          }, 900);
+        }
+      }
+    }
+
+    window.onload = startGame;
+  </script>
+</body>
+</html>

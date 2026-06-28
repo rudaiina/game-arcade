@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forgot Password - Arcade</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(195, 169, 247, 0.3);
+            z-index: 10;
+        }
+
+        .site-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #4a2a5b;
+            text-shadow: 1px 1px 4px #f7d6f2;
+        }
+
+       .home-link {
+      font-size: 30px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border-radius: 50%;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px #c6a1f7;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .home-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+
+        .login-container {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 4px solid #c3a9f7;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(195, 169, 247, 0.4);
+            padding: 40px 32px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: popin 1s cubic-bezier(.68, -0.55, .27, 1.55);
+        }
+
+        @keyframes popin {
+            0% { transform: scale(0.8); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .login-container h2 {
+            margin-bottom: 24px;
+            color: #4a2a5b;
+            font-size: 28px;
+            text-shadow: 1px 1px 4px #f7d6f2;
+        }
+
+        .already-registered {
+            color: #4a2a5b;
+            font-size: 15px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .forgot-link {
+            display: block;
+            margin-bottom: 18px;
+            color: #9673d8;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 2px solid #c3a9f7;
+            border-radius: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 24px;
+            background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+            color: #4a2a5b;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px #c6a1f7;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+            transform: scale(1.05);
+        }
+
+        .register-link {
+            display: block;
+            margin-top: 18px;
+            color: #4a2a5b;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 28px 20px;
+            }
+
+            .top-bar {
+                padding: 12px 16px;
+            }
+
+            .site-title {
+                font-size: 20px;
+            }
+            .home-link {
+                margin-top: 60px;
+            }
+        }
+    </style>
+    <body>
+	<div class="top-bar">
+        <div class="site-title">🎮 Arcade</div>
+         <a href="home.html" class="home-link" title="Home">🏠</a>
+    </div>
+    <div class="login-container">
+        <h2>Forgot Password</h2>
+	<form action="#" method="post">
+            <input type="email" placeholder="Registered Email" required />
+            <input type="password" placeholder="One Time Password" required />
+            
+            <button type="submit">Verify</button>
+        </form>
+        <a href="login.html" class="register-link">Back to Login</a>
+        </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arcade - Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .navbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(195, 169, 247, 0.4);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .site-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px #c6a1f7;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.08);
+    }
+
+    .main-content {
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .game-card {
+      width: 300px;
+      padding: 28px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 4px solid #c3a9f7;
+      box-shadow: 0 8px 32px rgba(195, 169, 247, 0.4);
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #4a2a5b;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05) rotate(-1deg);
+      box-shadow: 0 12px 36px rgba(195, 169, 247, 0.5);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .about-link {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      padding: 10px 16px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 15px #c6a1f7;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .about-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.08);
+    }
+
+    @media (max-width: 600px) {
+      .game-card {
+        width: 80%;
+      }
+
+      .nav-btn {
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+
+      .site-title {
+        font-size: 22px;
+      }
+
+      .about-link {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="site-title">🎮 Arcade</div>
+    <div class="nav-links">
+     
+      <a href="leaderboard.html" class="nav-btn">Leaderboard</a>
+      <a href="login.html" class="nav-btn">Login</a>
+      <a href="register.html" class="nav-btn">Register</a>
+      
+    </div>
+  </div>
+
+  <div class="main-content">
+    <br><br>
+    <a href="rock paper scissor.html" class="game-card">Rock Paper Scissors</a>
+    <a href="tic tac toe.html" class="game-card">Tic Tac Toe</a>
+    <a href="memory card game.html" class="game-card">Memory Card Game</a>
+  </div>
+
+  <a href="about us.html" class="about-link">About Us</a>
+
+</body>
+</html>

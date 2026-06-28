@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Arcade</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(195, 169, 247, 0.3);
+      z-index: 10;
+    }
+
+    .site-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+
+    .home-link {
+      font-size: 30px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border-radius: 50%;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px #c6a1f7;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .home-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+
+    .form-container {
+      margin-top: 120px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 32px;
+      padding: 40px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 8px 32px rgba(195, 169, 247, 0.4);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 28px;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 16px;
+      border: 2px solid #d8c3f7;
+      border-radius: 16px;
+      font-size: 16px;
+      outline: none;
+      background-color: #faf7ff;
+    }
+
+    button {
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      color: #4a2a5b;
+      font-weight: bold;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px #c6a1f7;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+    .login-link {
+            display: block;
+            margin-top: 18px;
+            color: #4a2a5b;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="site-title">🎮 Arcade</div>
+    <a href="home.html" class="home-link">🏠</a>
+  </div>
+
+  <div class="form-container">
+    <h2>Create Account</h2>
+    <form action="#" method="post">
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <a href="login.html" class="login-link">Already registered? Login here</a>
+  </div>
+
+</body>
+</html>

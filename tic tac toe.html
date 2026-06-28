@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe - Arcade</title>
+    <style>
+        body {
+            margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+        }
+        .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(195, 169, 247, 0.3);
+      z-index: 10;
+    }
+
+    .site-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+
+    .home-link {
+      font-size: 30px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border-radius: 50%;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px #c6a1f7;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .home-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+
+        .container {
+            margin-top: 90px;
+            background: #fff;
+            padding: 36px 32px 32px 32px;
+            border-radius: 30px;
+            box-shadow: 0 8px 30px rgba(150, 150, 200, 0.2);
+            text-align: center;
+            border: 4px solid #e6ccff;
+            min-width: 350px;
+        }
+        h1 {
+            color: #b38bff;
+            margin-bottom: 10px;
+            font-size: 2.3rem;
+            letter-spacing: 1px;
+        }
+        .mode-select {
+            margin-bottom: 12px;
+        }
+        .status {
+            font-size: 1.2rem;
+            color: #5555aa;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+        .cell {
+            background: #fff0f5;
+            border: 2px solid #d4a5ff;
+            border-radius: 15px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #7b5ae0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cell:hover {
+            background: #e6e6fa;
+            transform: scale(1.05);
+        }
+        .reset-btn {
+            padding: 10px 24px;
+            font-size: 1rem;
+            background: linear-gradient(90deg, #ffd1dc, #c5d8ff);
+            color: #444;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+        .reset-btn:hover {
+            background: linear-gradient(90deg, #c5d8ff, #ffd1dc);
+            transform: scale(1.05);
+        }
+        @media (max-width: 500px) {
+            .container {
+                min-width: unset;
+                padding: 18px 4px 18px 4px;
+            }
+            .board {
+                grid-template-columns: repeat(3, 60px);
+                grid-template-rows: repeat(3, 60px);
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+    <div class="site-title">🎮 Arcade</div>
+    <a href="home.html" class="home-link">🏠</a>
+  </div>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="mode-select">
+            <label style="color: #7b5ae0; font-weight: 500;">
+                <input type="radio" name="mode" value="multiplayer" checked onchange="changeMode(this.value)" style="accent-color: #b38bff;"> Multiplayer
+            </label>
+            <label style="margin-left: 15px; color: #7b5ae0; font-weight: 500;">
+                <input type="radio" name="mode" value="computer" onchange="changeMode(this.value)" style="accent-color: #b38bff;"> Vs Computer
+            </label>
+        </div>
+        <div class="status" id="status">Player X's turn</div>
+        <div class="board" id="board">
+            <div class="cell" onclick="handleClick(this, 0)"></div>
+            <div class="cell" onclick="handleClick(this, 1)"></div>
+            <div class="cell" onclick="handleClick(this, 2)"></div>
+            <div class="cell" onclick="handleClick(this, 3)"></div>
+            <div class="cell" onclick="handleClick(this, 4)"></div>
+            <div class="cell" onclick="handleClick(this, 5)"></div>
+            <div class="cell" onclick="handleClick(this, 6)"></div>
+            <div class="cell" onclick="handleClick(this, 7)"></div>
+            <div class="cell" onclick="handleClick(this, 8)"></div>
+        </div>
+        <button class="reset-btn" onclick="resetGame()">New Game</button>
+    </div>
+    <script>
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let currentPlayer = "X";
+        let gameOver = false;
+        let mode = "multiplayer"; // "multiplayer" or "computer"
+
+        function changeMode(selectedMode) {
+            mode = selectedMode;
+            resetGame();
+        }
+
+        function handleClick(cell, index) {
+            if (board[index] !== "" || gameOver) return;
+
+            board[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+
+            if (checkWinner()) {
+                document.getElementById("status").textContent = `🎉 Player ${currentPlayer} wins!`;
+                gameOver = true;
+            } else if (board.every(c => c !== "")) {
+                document.getElementById("status").textContent = "It's a tie!";
+                gameOver = true;
+            } else {
+                if (mode === "multiplayer") {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    document.getElementById("status").textContent = `Player ${currentPlayer}'s turn`;
+                } else if (mode === "computer") {
+                    currentPlayer = "O";
+                    document.getElementById("status").textContent = `Computer's turn...`;
+                    setTimeout(computerMove, 500);
+                }
+            }
+        }
+
+        function computerMove() {
+            if (gameOver) return;
+            let emptyIndices = board.map((v, i) => v === "" ? i : null).filter(i => i !== null);
+            if (emptyIndices.length === 0) return;
+            let move = findBestMove();
+            board[move] = "O";
+            document.querySelectorAll(".cell")[move].textContent = "O";
+
+            if (checkWinner()) {
+                document.getElementById("status").textContent = `🤖 Computer wins!`;
+                gameOver = true;
+            } else if (board.every(c => c !== "")) {
+                document.getElementById("status").textContent = "It's a tie!";
+                gameOver = true;
+            } else {
+                currentPlayer = "X";
+                document.getElementById("status").textContent = `Player X's turn`;
+            }
+        }
+
+        function findBestMove() {
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === "") {
+                    board[i] = "O";
+                    if (checkWinner()) {
+                        board[i] = "";
+                        return i;
+                    }
+                    board[i] = "";
+                }
+            }
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === "") {
+                    board[i] = "X";
+                    if (checkWinner()) {
+                        board[i] = "";
+                        return i;
+                    }
+                    board[i] = "";
+                }
+            }
+            let emptyIndices = board.map((v, i) => v === "" ? i : null).filter(i => i !== null);
+            return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+        }
+
+        function checkWinner() {
+            const wins = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return wins.some(combo =>
+                board[combo[0]] === currentPlayer &&
+                board[combo[1]] === currentPlayer &&
+                board[combo[2]] === currentPlayer
+            );
+        }
+
+        function resetGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X";
+            gameOver = false;
+            document.getElementById("status").textContent = "Player X's turn";
+            document.querySelectorAll(".cell").forEach(cell => cell.textContent = "");
+        }
+    </script>
+</body>
+</html>

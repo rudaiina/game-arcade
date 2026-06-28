@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rock Paper Scissors - Arcade</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f7e6f9 0%, #d0c3f7 50%, #a9d0f7 100%);
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(195, 169, 247, 0.3);
+      z-index: 10;
+    }
+
+    .site-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #4a2a5b;
+      text-shadow: 1px 1px 4px #f7d6f2;
+    }
+
+    .home-link {
+      font-size: 30px;
+      background: linear-gradient(90deg, #b3c7f7 0%, #f7b5d1 100%);
+      color: #4a2a5b;
+      border-radius: 50%;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 12px #c6a1f7;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .home-link:hover {
+      background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+      transform: scale(1.05);
+    }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 420px;
+    margin-top: 50px;
+    margin-bottom:auto;
+    padding: 28px 20px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 4px solid #c3a9f7;
+    box-shadow: 0 8px 32px rgba(195, 169, 247, 0.4);
+    animation: popin 1s cubic-bezier(.68, -0.55, .27, 1.55);
+    scale: .77;
+  }
+
+  @keyframes popin {
+    0% { transform: scale(0.7); opacity: 0; }
+    80% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .comp-label {
+    font-size: 24px;
+    color: #9673d8;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 4px #f7d6f2;
+  }
+
+  .comp-anim, .user-anim {
+    font-size: 80px;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 4px solid #c3a9f7;
+    background: linear-gradient(135deg, #f7d6f2 0%, #c3a9f7 100%);
+    box-shadow: 0 6px 24px #c3a9f7;
+    animation: bounce 1.2s infinite alternate;
+    margin-bottom: 10px;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px) scale(1.05); }
+  }
+
+  .comp-final {
+    font-size: 26px;
+    color: #9673d8;
+    font-weight: bold;
+    text-shadow: 1px 1px 6px #f7d6f2;
+    min-height: 30px;
+    margin-top: 10px;
+  }
+
+  #result {
+    padding: 14px 32px;
+    font-size: 26px;
+    color: #4a2a5b;
+    text-shadow: 1px 1px 6px #f7d6f2;
+    background: linear-gradient(90deg, #f7b5d1 0%, #b3c7f7 100%);
+    border-radius: 44px;
+    box-shadow: 0 8px 24px #c3a9f7;
+    min-height: 48px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 2.5px solid #f7d6f2;
+    margin: 22px 0;
+  }
+
+  .choices {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 44px;
+  }
+  h1 {
+            color: #b38bff;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+  button.choice-btn {
+    font-size: 60px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #c3a9f7;
+    background: linear-gradient(135deg, #f7d6f2 0%, #c3a9f7 100%);
+    box-shadow: 0 4px 16px #c3a9f7;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    color: #4a2a5b;
+    user-select: none;
+  }
+
+  button.choice-btn:hover {
+    transform: scale(1.12) rotate(-8deg);
+    background: linear-gradient(135deg, #c3a9f7 0%, #f7d6f2 100%);
+    border-color: #9673d8;
+    box-shadow: 0 6px 24px #9673d8;
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      width: 90vw;
+      padding: 24px 10px;
+      margin-top: 40px;
+    }
+
+    .choices button.choice-btn {
+      width: 70px;
+      height: 70px;
+      font-size: 36px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+    <div class="site-title">🎮 Arcade</div>
+    <a href="home.html" class="home-link">🏠</a>
+  </div>
+<div class="container">
+  <h1>Rock Paper Scissors</h1>
+  <div class="comp-label">Computer<br><br></div>
+  <div id="compChoice" class="comp-anim">❓</div>
+  <div id="compFinal" class="comp-final"></div>
+
+  <div id="result"></div>
+
+  <div class="choices" role="group" aria-label="Pick your choice">
+    <button class="choice-btn" data-choice="rock" aria-label="Rock">✊</button>
+    <button class="choice-btn" data-choice="paper" aria-label="Paper">✋</button>
+    <button class="choice-btn" data-choice="scissors" aria-label="Scissors">✌️</button>
+  </div>
+</div>
+
+<script>
+  const choices = ['rock', 'paper', 'scissors'];
+  const emojiMap = {rock: '✊', paper: '✋', scissors: '✌️'};
+  let userScore = 0;
+  let compScore = 0;
+
+  const compChoiceElem = document.getElementById('compChoice');
+  const compFinalElem = document.getElementById('compFinal');
+  const resultElem = document.getElementById('result');
+  const choiceButtons = document.querySelectorAll('.choice-btn');
+
+  function computerPick() {
+    return choices[Math.floor(Math.random() * choices.length)];
+  }
+
+  function resetGame() {
+    userScore = 0;
+    compScore = 0;
+    compChoiceElem.textContent = '❓';
+    compFinalElem.textContent = '';
+    resultElem.style.display = 'none';
+    choiceButtons.forEach(btn => btn.disabled = false);
+  }
+
+  choiceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const userChoice = button.getAttribute('data-choice');
+      choiceButtons.forEach(btn => btn.disabled = true);
+
+      // Animate computer choice cycling for 1.5 seconds
+      let animationCount = 0;
+      const animInterval = setInterval(() => {
+        const animChoice = choices[Math.floor(Math.random() * choices.length)];
+        compChoiceElem.textContent = emojiMap[animChoice];
+        animationCount++;
+        if(animationCount >= 15){
+          clearInterval(animInterval);
+          const compChoice = computerPick();
+          compChoiceElem.textContent = emojiMap[compChoice];
+
+          const winner = determineWinner(userChoice, compChoice);
+          resultElem.textContent = winner;
+          resultElem.style.display = 'flex';
+
+          if(winner === 'You Win!') userScore++;
+          else if(winner === 'Computer Wins!') compScore++;
+
+          choiceButtons.forEach(btn => btn.disabled = false);
+        }
+      }, 100);
+    });
+  });
+
+  function determineWinner(userChoice, compChoice) {
+    if(userChoice === compChoice) return 'Draw';
+    if(
+      (userChoice === 'rock' && compChoice === 'scissors') ||
+      (userChoice === 'paper' && compChoice === 'rock') ||
+      (userChoice === 'scissors' && compChoice === 'paper')
+    ) return 'You Win!';
+    return 'Computer Wins!';
+  }
+
+  resetGame();
+</script>
+
+</body>
+</html>
