@@ -20,15 +20,25 @@ Technologies Used
 
 Project Structure
 game-arcade/
+
 ├── index.html 
+
 ├── about us.html
+
 ├── login.html
+
 ├── register.html
+
 ├── forgot.html
+
 ├── leaderboard.html
+
 ├── rock paper scissor.html
+
 ├── tic tac toe.html
+
 ├── memory card game.html
+
 └── README.md
 
 Getting Started
